@@ -3,111 +3,113 @@ package com.github.habahnow.productsapi.model;
 import com.opencsv.bean.CsvBindByName;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-public class Device {
+public class MiniPC {
 
+    //TODO: read up on message for @NotNUll. i think i can add error messages
+    @NotBlank
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @CsvBindByName
-    private Long id;
+    private String partNumber;
 
-    @NotEmpty
+    @NotBlank
     @CsvBindByName
     private String cpuName;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     //Speed in GHz
     private Long cpuSpeed;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private Long cores;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int usb3PortsExternal;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int usb2PortsExternal;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int hdmiPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int vgaPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int comPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int gigaLanPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int fastLanPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int audioOutPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int micInPorts;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     //Ram in Gigabytes
     private Long ram;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     //eMMC in gigabytes
     private Long eMMC;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int simCardSlots;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int mPCIESlots;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int mSataSlots;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int mSataCombinedMpcieSlots;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int sataConnectors;
 
-    @NotEmpty
+    @NotNull
     @CsvBindByName
     private int slimSataConnectors;
 
 
-    public Long getId() {
-        return id;
+    public String getPartNumber() {
+        return partNumber;
     }
 
-    public Device(){
+    public MiniPC(){
 
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
     }
 
     public String getCpuName() {
@@ -272,7 +274,7 @@ public class Device {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.id, this.cpuName,this.cpuSpeed,
+        return Objects.hash(this.partNumber, this.cpuName,this.cpuSpeed,
                 this.cores, this.hdmiPorts, this.usb2PortsExternal,
                 this.usb3PortsExternal);
     }
@@ -280,7 +282,7 @@ public class Device {
     @Override
     public String toString() {
         return "Device{" +
-                "id=" + id +
+                "partNumber=" + partNumber +
                 ", CPUName='" + cpuName + '\'' +
                 ", CPUSpeed=" + cpuSpeed +
                 ", cores=" + cores +
