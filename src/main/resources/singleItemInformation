@@ -1,0 +1,23 @@
+{
+    "partNumber" : "EBOX-3350DX3-RCAV-AP",
+    "cpuName" : "Vortex86DX3",
+    "cpuSpeed": 1.0,
+    "cores": 2.0,
+    "usb3PortsExternal" : "0",
+    "usb2PortsExternal" : "3",
+    "hdmiPorts" : "0",
+    "vgaPorts" : "1",
+    "comPorts" : "0",
+    "gigaLanPorts" : "0",
+    "fastLanPorts" : "1",
+    "audioOutPorts" : "1",
+    "micInPorts" : "1",
+    "ram" : 1.0,
+    "eMMC" : "0",
+    "simCardSlots" : "0",
+    "mPCIESlots" : "1",
+    "mSataSlots" : "0",
+    "mSataCombinedMpcieSlots" : "0",
+    "sataConnectors" : "1",
+    "slimSataConnectors" : "0"
+}

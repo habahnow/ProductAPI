@@ -1,5 +1,6 @@
 package com.github.habahnow.productsapi.service;
 
+import com.github.habahnow.productsapi.exception.RecordNotFoundException;
 import com.github.habahnow.productsapi.repository.MiniPCRepository;
 import com.github.habahnow.productsapi.model.MiniPC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DeviceService {
+public class MiniPCService {
 
     @Autowired
     MiniPCRepository repository;
 
-    public List<MiniPC> getAllDevices(){
+    public List<MiniPC> getAllMiniPCs(){
         List<MiniPC> miniPCList = repository.findAll();
         if(miniPCList.size() > 0){
             return miniPCList;
@@ -26,7 +27,7 @@ public class DeviceService {
     }
 
     public MiniPC createOrUpdateDevice(MiniPC entity)
-            throws RecordNotFoundException{
+            throws RecordNotFoundException {
         if(entity.getPartNumber()!=null){
             Optional<MiniPC> device = //
                     repository.findById(entity.getPartNumber());
@@ -74,14 +75,14 @@ public class DeviceService {
     }
     public void deleteMiniPCByPartNumber(String name) //
             throws RecordNotFoundException{
-        Optional<MiniPC> device = repository.findByPartNumber(name);
+        Optional<MiniPC> device = repository.findById(name);
 
         if(device.isPresent()){
-            repository.deleteByPartNumber(name);
+            repository.deleteById(name);
         }
         else{
             throw new RecordNotFoundException("No student record exists for " +
-                    "the given part number: " + name);
+                    "the given part number:", name);
         }
 
     }
