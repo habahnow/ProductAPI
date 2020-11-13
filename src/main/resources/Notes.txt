@@ -1,0 +1,10 @@
+TODO: Table "works" try to add a new item by updating singleItemInfo.
+TODO: creating tables for Price markups, price breaks and intersections of those
+tables. Instead of lists im now using ints
+
+May use a table per concrete classs Inheritance model. I'm uncertain if this is
+right only because in this implementation, even the Parent class receives a
+table which is pointless in my case (item class). From what i understand in the
+Hibernate documentation, i could forgo an inheritance model in my situation
+because Hibernate would recognize the parent class, while MySQL wouldn't, which
+is fine.
