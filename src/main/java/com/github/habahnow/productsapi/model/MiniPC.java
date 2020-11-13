@@ -8,20 +8,19 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-public class MiniPC {
+@Table(name = "mini_pc")
+public class MiniPC extends Item {
 
     //TODO: read up on message for @NotNUll. i think i can add error messages
-    @NotBlank
-    @Id
-    @CsvBindByName
-    private String partNumber;
 
     @NotBlank
     @CsvBindByName
+    @Column(name = "cpu_name")
     private String cpuName;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "cpu_speed")
     //Speed in GHz
     private Long cpuSpeed;
 
@@ -31,38 +30,47 @@ public class MiniPC {
 
     @NotNull
     @CsvBindByName
+    @Column(name = "usb3_ports_external")
     private int usb3PortsExternal;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "usb2_ports_external")
     private int usb2PortsExternal;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "hdmi_ports")
     private int hdmiPorts;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "vga_ports")
     private int vgaPorts;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "com_ports")
     private int comPorts;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "giga_lan_ports")
     private int gigaLanPorts;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "fast_lan_ports")
     private int fastLanPorts;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "audio_out_ports")
     private int audioOutPorts;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "mic_in_ports")
     private int micInPorts;
 
     @NotNull
@@ -77,40 +85,38 @@ public class MiniPC {
 
     @NotNull
     @CsvBindByName
+    @Column(name = "sim_card_slots")
     private int simCardSlots;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "mpcie_slots")
     private int mPCIESlots;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "msata_slots")
     private int mSataSlots;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "msata_combined_mpcie_slots")
     private int mSataCombinedMpcieSlots;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "sata_connectors")
     private int sataConnectors;
 
     @NotNull
     @CsvBindByName
+    @Column(name = "slimsata_connectors")
     private int slimSataConnectors;
-
-
-    public String getPartNumber() {
-        return partNumber;
-    }
 
     public MiniPC(){
 
     }
 
-    public void setPartNumber(String partNumber) {
-        this.partNumber = partNumber;
-    }
 
     public String getCpuName() {
         return cpuName;
@@ -274,15 +280,19 @@ public class MiniPC {
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.partNumber, this.cpuName,this.cpuSpeed,
+        return Objects.hash(this.cpuName,this.cpuSpeed,
                 this.cores, this.hdmiPorts, this.usb2PortsExternal,
                 this.usb3PortsExternal);
     }
 
     @Override
     public String toString() {
-        return "Device{" +
-                "partNumber=" + partNumber +
+        return "MiniPC {" +
+                "partNumber=" + this.getPartNumber()+
+                ", importPrice=" + this.getImportPrice()+
+                ", quantity Price Breaks=" + this.getQuantityPriceBreaksID() +
+                ", Price Break Mark ups=" + this.getPriceBreakMarkUpsID() +
+                ", Prices =" + this.getPrices() +
                 ", CPUName='" + cpuName + '\'' +
                 ", CPUSpeed=" + cpuSpeed +
                 ", cores=" + cores +

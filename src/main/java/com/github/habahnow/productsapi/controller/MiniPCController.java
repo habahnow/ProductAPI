@@ -39,6 +39,7 @@ public class MiniPCController {
     }
 
     @DeleteMapping("/{partNumber}")
+    @ResponseBody
     public HttpStatus deleteMiniPCByPartNumber(//
             @PathVariable("partNumber") String name)
             throws RecordNotFoundException{
