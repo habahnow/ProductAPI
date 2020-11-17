@@ -29,9 +29,6 @@ public abstract class Item {
     @Column(name = "price_breaks_mark_ups_id")
     private int priceBreakMarkUpsID;
 
-    @CsvBindByName
-    private int prices;
-
     public String getPartNumber() {
         return partNumber;
     }
@@ -64,14 +61,6 @@ public abstract class Item {
         this.priceBreakMarkUpsID = priceBreakMarkUpsID;
     }
 
-    public int getPrices() {
-        return prices;
-    }
-
-    public void setPrices(int prices) {
-        this.prices = prices;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,13 +71,12 @@ public abstract class Item {
                 Objects.equals(getQuantityPriceBreaksID(),
                         item.getQuantityPriceBreaksID()) &&
                 Objects.equals(getPriceBreakMarkUpsID(),
-                        item.getPriceBreakMarkUpsID()) &&
-                Objects.equals(getPrices(), item.getPrices());
+                        item.getPriceBreakMarkUpsID());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getPartNumber(), getImportPrice(),
-                getQuantityPriceBreaksID(), getPriceBreakMarkUpsID(), getPrices());
+                getQuantityPriceBreaksID(), getPriceBreakMarkUpsID() );
     }
 }

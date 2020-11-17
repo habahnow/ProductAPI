@@ -1,4 +1,3 @@
-TODO: Table "works" try to add a new item by updating singleItemInfo.
 TODO: creating tables for Price markups, price breaks and intersections of those
 tables. Instead of lists im now using ints
 

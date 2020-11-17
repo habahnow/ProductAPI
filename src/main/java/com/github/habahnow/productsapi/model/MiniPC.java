@@ -114,7 +114,8 @@ public class MiniPC extends Item {
     private int slimSataConnectors;
 
     public MiniPC(){
-
+        this.setPriceBreakMarkUpsID(1);
+        this.setQuantityPriceBreaksID(1);
     }
 
 
@@ -292,7 +293,6 @@ public class MiniPC extends Item {
                 ", importPrice=" + this.getImportPrice()+
                 ", quantity Price Breaks=" + this.getQuantityPriceBreaksID() +
                 ", Price Break Mark ups=" + this.getPriceBreakMarkUpsID() +
-                ", Prices =" + this.getPrices() +
                 ", CPUName='" + cpuName + '\'' +
                 ", CPUSpeed=" + cpuSpeed +
                 ", cores=" + cores +
