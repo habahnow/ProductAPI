@@ -14,7 +14,7 @@ public abstract class Item {
     @NotBlank
     @Id
     @CsvBindByName
-    @Column(name = "part_number")
+    @Column(name = "part_number" , nullable = false)
     private String partNumber;
 
     @CsvBindByName
