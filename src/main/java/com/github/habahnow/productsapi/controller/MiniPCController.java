@@ -19,6 +19,7 @@ import javax.xml.ws.Response;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -34,13 +35,14 @@ public class MiniPCController {
     }
 
     @PostMapping("/upload-csv-file")
-    public String uploadCSVFile(@RequestParam("file")MultipartFile file,
-                                Model model){
+    public String uploadCSVFileConfirmation(
+            @RequestParam("file")MultipartFile file,Model model){
+
         if (file.isEmpty()) {
             model.addAttribute("message", "Please select a CSV file " + //
                     "to upload.");
             model.addAttribute("status", false);
-        } else {
+        }else {
             // parse CSV file to create a list of `User` objects
             try (Reader reader = new BufferedReader(new //
                     InputStreamReader(file.getInputStream()))) {
@@ -54,13 +56,27 @@ public class MiniPCController {
                 // convert `CsvToBean` object to list of users
                 List<MiniPC> miniPCs = csvToBean.parse();
 
-                for( MiniPC miniPC: miniPCs){
-                    service.createOrUpdateDevice(miniPC);
+                List<String> miniPCStatus = new ArrayList<>();
+                for (MiniPC miniPC: miniPCs){
+                    boolean exists = service.partNumberExists(//
+                            miniPC.getPartNumber());
+                    if(exists){
+                        miniPCStatus.add("Updating");
+                    }
+                    else{
+                        miniPCStatus.add("Creating");
+                    }
+
+                }
+                int counter =0;
+
+                for (String status: miniPCStatus){
                 }
 
                 // save users list on model
                 model.addAttribute("miniPCs", miniPCs);
                 model.addAttribute("status", true);
+                model.addAttribute("miniPCStatus", miniPCStatus);
 
             } catch (Exception ex) {
                 model.addAttribute("message", "An error occurred " + //
@@ -70,8 +86,19 @@ public class MiniPCController {
         }
 
         return "file-upload-status";
-
     }
+
+//    @PutMapping("/upload-csv-file")
+//    public String uploadCSVFile(Model model){
+//
+//
+//        for( MiniPC miniPC: miniPCs){
+//            service.createOrUpdateDevice(miniPC);
+//        }
+//
+//        return "file-upload-status";
+//
+//    }
     
     @GetMapping("/getAll")
     public ResponseEntity<List<MiniPC>> getAllStudents(){

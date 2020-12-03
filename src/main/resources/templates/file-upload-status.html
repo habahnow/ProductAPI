@@ -27,13 +27,13 @@
                     <th scope="col">#</th>
                     <th scope="col">Part Number</th>
                     <th scope="col">Status</th>
-                    <th scope="col">Updates</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="miniPC, i : ${miniPCs}">
                     <th scope="row" th:text="${i.index + 1}"></th>
                     <td th:text="${miniPC.partNumber}"></td>
+                    <td th:text="${miniPCStatus[i.index]}"></td>
                 </tr>
                 </tbody>
             </table>

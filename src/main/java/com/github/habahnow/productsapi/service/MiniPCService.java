@@ -26,6 +26,16 @@ public class MiniPCService {
         }
     }
 
+    public boolean partNumberExists(String partNumber){
+        if(!repository.findById(partNumber).isPresent()){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
     //TODO: change this method to separate create or upddate methods i think
     public MiniPC createOrUpdateDevice(MiniPC entity)
             throws RecordNotFoundException {
