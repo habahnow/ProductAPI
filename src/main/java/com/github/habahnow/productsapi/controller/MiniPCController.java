@@ -34,6 +34,28 @@ public class MiniPCController {
         return "miniPCIndex";
     }
 
+    //TODO: i need to either find a way to pass data between previous post
+    // to this post (maybe using Session Attributes), or not include a
+    // confirmation
+    @PostMapping("/save-csv-file")
+    public String saveCSVFile(
+            @RequestParam("miniPCs")List<MiniPC> miniPCs  , Model model){
+        if (miniPCs.isEmpty() ){
+            //TODO: fix message
+            model.addAttribute("message", "Error, didnt receive miniPCs");
+            model.addAttribute("status", false);
+
+        }
+        else{
+            model.addAttribute("status", true);
+
+        }
+
+        model.addAttribute("status", true);
+
+        return "success";
+
+    }
 
     @PostMapping("/upload-csv-file")
     public String uploadCSVFileConfirmation(
@@ -43,7 +65,8 @@ public class MiniPCController {
             model.addAttribute("message", "Please select a CSV file " + //
                     "to upload.");
             model.addAttribute("status", false);
-        }else {
+        }
+        else {
             // parse CSV file to create a list of `User` objects
             try (Reader reader = new BufferedReader(new //
                     InputStreamReader(file.getInputStream()))) {
@@ -89,18 +112,6 @@ public class MiniPCController {
         return "file-upload-status";
     }
 
-//    @PutMapping("/upload-csv-file")
-//    public String uploadCSVFile(Model model){
-//
-//
-//        for( MiniPC miniPC: miniPCs){
-//            service.createOrUpdateDevice(miniPC);
-//        }
-//
-//        return "file-upload-status";
-//
-//    }
-    
     @GetMapping("/getAll")
     public ResponseEntity<List<MiniPC>> getAllStudents(){
         List<MiniPC> list = service.getAllMiniPCs();
