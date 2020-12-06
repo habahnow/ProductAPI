@@ -34,6 +34,7 @@ public class MiniPCController {
         return "miniPCIndex";
     }
 
+
     @PostMapping("/upload-csv-file")
     public String uploadCSVFileConfirmation(
             @RequestParam("file")MultipartFile file,Model model){
