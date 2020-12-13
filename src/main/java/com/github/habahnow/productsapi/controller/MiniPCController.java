@@ -85,16 +85,19 @@ public class MiniPCController {
                     boolean exists = service.partNumberExists(//
                             miniPC.getPartNumber());
                     if(exists){
-                        miniPCStatus.add("Updating");
+                        if(!service.miniPCIsChanged(miniPC)){
+                            miniPCStatus.add("Unchanged");
+                        }
+                        else {
+                            miniPCStatus.add("Updated");
+                            service.createOrUpdateDevice(miniPC);
+                        }
                     }
                     else{
-                        miniPCStatus.add("Creating");
+                        miniPCStatus.add("Created");
+                        service.createOrUpdateDevice(miniPC);
                     }
 
-                }
-                int counter =0;
-
-                for (String status: miniPCStatus){
                 }
 
                 // save users list on model

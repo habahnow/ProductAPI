@@ -287,6 +287,35 @@ public class MiniPC extends Item {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof MiniPC)) return false;
+        if (!super.equals(o)) return false;
+        MiniPC miniPC = (MiniPC) o;
+        return getUsb3PortsExternal() == miniPC.getUsb3PortsExternal() && //
+                getUsb2PortsExternal() == miniPC.getUsb2PortsExternal() && //
+                getHdmiPorts() == miniPC.getHdmiPorts() && //
+                getVgaPorts() == miniPC.getVgaPorts() && //
+                getComPorts() == miniPC.getComPorts() && //
+                getGigaLanPorts() == miniPC.getGigaLanPorts() && //
+                getFastLanPorts() == miniPC.getFastLanPorts() && //
+                getAudioOutPorts() == miniPC.getAudioOutPorts() && //
+                getMicInPorts() == miniPC.getMicInPorts() && //
+                getSimCardSlots() == miniPC.getSimCardSlots() && //
+                getmPCIESlots() == miniPC.getmPCIESlots() &&//
+                getmSataSlots() == miniPC.getmSataSlots() &&//
+                getmSataCombinedMpcieSlots() == //
+                        miniPC.getmSataCombinedMpcieSlots() &&//
+                getSataConnectors() == miniPC.getSataConnectors() &&//
+                getSlimSataConnectors() == miniPC.getSlimSataConnectors() &&//
+                getCpuName().equals(miniPC.getCpuName()) &&//
+                Objects.equals(getCpuSpeed(), miniPC.getCpuSpeed()) &&//
+                Objects.equals(getCores(), miniPC.getCores()) &&//
+                Objects.equals(getRam(), miniPC.getRam()) &&//
+                Objects.equals(geteMMC(), miniPC.geteMMC());
+    }
+
+    @Override
     public String toString() {
         return "MiniPC {" +
                 "partNumber=" + this.getPartNumber()+

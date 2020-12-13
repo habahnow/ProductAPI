@@ -16,33 +16,12 @@ public class MiniPCService {
     @Autowired
     MiniPCRepository repository;
 
-    public List<MiniPC> getAllMiniPCs(){
-        List<MiniPC> miniPCList = repository.findAll();
-        if(miniPCList.size() > 0){
-            return miniPCList;
-        }
-        else{
-            return new ArrayList<MiniPC>();
-        }
-    }
-
-    public boolean partNumberExists(String partNumber){
-        if(!repository.findById(partNumber).isPresent()){
-            return false;
-        }
-        else{
-            return true;
-        }
-
-    }
-
-    //TODO: change this method to separate create or upddate methods i think
     public MiniPC createOrUpdateDevice(MiniPC entity)
             throws RecordNotFoundException {
         if(entity.getPartNumber()!=null){
             Optional<MiniPC> device = //
                     repository.findById(entity.getPartNumber());
-                    //repository.findByPartNumber(entity.getPartNumber());
+            //repository.findByPartNumber(entity.getPartNumber());
 
             if(device.isPresent()){
                 MiniPC newDevice = device.get();
@@ -84,6 +63,37 @@ public class MiniPCService {
             return entity;
         }
     }
+
+    public List<MiniPC> getAllMiniPCs(){
+        List<MiniPC> miniPCList = repository.findAll();
+        if(miniPCList.size() > 0){
+            return miniPCList;
+        }
+        else{
+            return new ArrayList<MiniPC>();
+        }
+    }
+
+    public boolean miniPCIsChanged(MiniPC miniPC){
+        MiniPC existing = repository.getOne(miniPC.getPartNumber());
+        if (existing.equals(miniPC)){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean partNumberExists(String partNumber){
+        if(!repository.findById(partNumber).isPresent()){
+            return false;
+        }
+        else{
+            return true;
+        }
+
+    }
+
+    //TODO: change this method to separate create or upddate methods i think
+
     public void deleteMiniPCByPartNumber(String name) //
             throws RecordNotFoundException{
         Optional<MiniPC> device = repository.findById(name);
@@ -97,5 +107,7 @@ public class MiniPCService {
         }
 
     }
+
+
 
 }
