@@ -21,32 +21,9 @@ public class MiniPCService {
         if(entity.getPartNumber()!=null){
             Optional<MiniPC> device = //
                     repository.findById(entity.getPartNumber());
-            //repository.findByPartNumber(entity.getPartNumber());
 
             if(device.isPresent()){
-                MiniPC newDevice = device.get();
-                newDevice.setAudioOutPorts(entity.getAudioOutPorts());
-                newDevice.setComPorts(entity.getComPorts());
-                newDevice.setCores(entity.getCores());
-                newDevice.setCpuName(entity.getCpuName());
-                newDevice.setCpuSpeed(entity.getCpuSpeed());
-                newDevice.seteMMC(entity.geteMMC());
-                newDevice.setFastLanPorts(entity.getFastLanPorts());
-                newDevice.setGigaLanPorts(entity.getGigaLanPorts());
-                newDevice.setHdmiPorts(entity.getHdmiPorts());
-                newDevice.setMicInPorts(entity.getMicInPorts());
-                newDevice.setmPCIESlots(entity.getmPCIESlots());
-                newDevice.setmSataCombinedMpcieSlots( //
-                        entity.getmSataCombinedMpcieSlots());
-                newDevice.setmSataSlots(entity.getmSataSlots());
-                newDevice.setRam(entity.getRam());
-                newDevice.setSataConnectors(entity.getSataConnectors());
-                newDevice.setVgaPorts(entity.getVgaPorts());
-                newDevice.setUsb3PortsExternal(entity.getUsb3PortsExternal());
-                newDevice.setUsb2PortsExternal(entity.getUsb2PortsExternal());
-                newDevice.setSlimSataConnectors(entity.getSlimSataConnectors());
-                newDevice.setSimCardSlots(entity.getSimCardSlots());
-
+                MiniPC newDevice = entity;
                 newDevice = repository.save(newDevice);
 
                 return newDevice;
