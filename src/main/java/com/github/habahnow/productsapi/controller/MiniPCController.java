@@ -34,9 +34,6 @@ public class MiniPCController {
         return "miniPCIndex";
     }
 
-    //TODO: i need to either find a way to pass data between previous post
-    // to this post (maybe using Session Attributes), or not include a
-    // confirmation
     @PostMapping("/save-csv-file")
     public String saveCSVFile(
             @RequestParam("miniPCs")List<MiniPC> miniPCs  , Model model){
@@ -54,6 +51,12 @@ public class MiniPCController {
         model.addAttribute("status", true);
 
         return "success";
+
+    }
+
+    @GetMapping("/csv-reviewer-properties-upload")
+    public String startPageCSVReviewerProperties(){
+        return "csv-reviewer-properties-upload";
 
     }
 

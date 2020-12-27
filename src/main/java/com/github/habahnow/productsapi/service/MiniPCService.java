@@ -16,6 +16,7 @@ public class MiniPCService {
     @Autowired
     MiniPCRepository repository;
 
+    //TODO: change this method to separate create or upddate methods i think
     public MiniPC createOrUpdateDevice(MiniPC entity)
             throws RecordNotFoundException {
         if(entity.getPartNumber()!=null){
@@ -69,7 +70,6 @@ public class MiniPCService {
 
     }
 
-    //TODO: change this method to separate create or upddate methods i think
 
     public void deleteMiniPCByPartNumber(String name) //
             throws RecordNotFoundException{
