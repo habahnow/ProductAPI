@@ -21,7 +21,7 @@
                 should be used before updating or creating MiniPCs to ensure
                 that the CSV is correct, and will make the expected changes to the
                 database.</p>
-            <form method="post" th:action="@{/minipc/}" enctype="multipart/form-data" >
+            <form method="post" th:action="@{/minipc/csv-reviewer-properties-result}" enctype="multipart/form-data" >
                 <div class="form-group mt-3">
                     <label for="file">Select a CSV file</label>
                     <input type="file" name="file" class="form-control-file" id="file" accept=".csv">

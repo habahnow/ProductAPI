@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Upload CSV File Example</title>
+
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <h1>Files to Upload</h1>
+            <!--display error if any-->
+            <div class="alert alert-danger" role="alert" th:if="${!status}">
+                <strong>Error:</strong>
+                <span th:text="${message}"></span>
+            </div>
+
+            <!--display users list-->
+            <table class="table table-striped" th:if="${status}">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Part Number</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="miniPC, i : ${miniPCs}">
+                    <th scope="row" th:text="${i.index + 1}"></th>
+                    <td th:text="${miniPC.partNumber}"></td>
+                    <td th:text="${miniPCStatus[i.index]}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <form method="get" action="/minipc/csv-reviewer-properties-upload">
+                    <button type="submit" class="btn btn-primary" >Go Back</button>
+                </form>
+                <form method="get" action="/minipc/">
+                    <button type="submit" class="btn btn-primary" >Add new Mini PCs with CSV file</button>
+                </form>
+                <form method="get" action="/minipc/">
+                    <button type="submit" class="btn btn-primary" >Update Mini PCs with CSV file</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

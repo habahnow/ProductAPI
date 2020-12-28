@@ -34,12 +34,74 @@ public class MiniPCController {
         return "miniPCIndex";
     }
 
+    @PostMapping("/csv-reviewer-properties-result")
+    public String csvReviewerPropertiesResult(
+            @RequestParam("file")MultipartFile file, Model model){
+
+        if (file.isEmpty()) {
+            model.addAttribute("message", "Please select a CSV file " + //
+                    "to upload.");
+            model.addAttribute("status", false);
+        }
+        else {
+            // parse CSV file to create a list of `User` objects
+            try (Reader reader = new BufferedReader(new //
+                    InputStreamReader(file.getInputStream()))) {
+
+                // create csv bean reader
+                CsvToBean<MiniPC> csvToBean = new CsvToBeanBuilder(reader)
+                        .withType(MiniPC.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .build();
+
+                // convert `CsvToBean` object to list of users
+                List<MiniPC> miniPCs = csvToBean.parse();
+
+                List<String> miniPCStatus = new ArrayList<>();
+                for (MiniPC miniPC: miniPCs){
+                    boolean exists = service.partNumberExists(//
+                            miniPC.getPartNumber());
+                    if(exists){
+                        if(!service.miniPCIsChanged(miniPC)){
+                            miniPCStatus.add("Will be Unchanged");
+                        }
+                        else {
+                            miniPCStatus.add("Will be Updated");
+                        }
+                    }
+                    else{
+                        miniPCStatus.add("Will be Created");
+                    }
+
+                }
+
+                // save users list on model
+                model.addAttribute("miniPCs", miniPCs);
+                model.addAttribute("status", true);
+                model.addAttribute("miniPCStatus", miniPCStatus);
+
+            } catch (Exception ex) {
+                model.addAttribute("message", "An error occurred " + //
+                        "while processing the CSV file.\n\nError:\n" +ex) ;
+                model.addAttribute("status", false);
+            }
+        }
+
+        return "csv-reviewer-result";
+    }
+
+    @GetMapping("/csv-reviewer-properties-upload")
+    public String startPageCSVReviewerProperties(){
+        return "csv-reviewer-properties-upload";
+
+    }
+
     @PostMapping("/save-csv-file")
     public String saveCSVFile(
             @RequestParam("miniPCs")List<MiniPC> miniPCs  , Model model){
         if (miniPCs.isEmpty() ){
             //TODO: fix message
-            model.addAttribute("message", "Error, didnt receive miniPCs");
+            model.addAttribute("message", "Error, didn't receive miniPCs");
             model.addAttribute("status", false);
 
         }
@@ -51,12 +113,6 @@ public class MiniPCController {
         model.addAttribute("status", true);
 
         return "success";
-
-    }
-
-    @GetMapping("/csv-reviewer-properties-upload")
-    public String startPageCSVReviewerProperties(){
-        return "csv-reviewer-properties-upload";
 
     }
 
