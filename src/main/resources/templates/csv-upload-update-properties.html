@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Upload a CSV File</title>
+
+
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <h1>Upload a CSV File with Changes to the Properties of Existing MiniPCs </h1>
+            <p>
+               If the CSV file is in an incorrect format, or includes MiniPCs
+                that do not already exist in the database, an error will be
+                shown.
+                Make sure to upload the CSV file to the reviewer page before
+                uploading here in order to ensure the CSV file will make the
+                change you expect.
+            </p>
+            <form method="post" th:action="@{/minipc/csv-upload-update-properties-result}" enctype="multipart/form-data" >
+                <div class="form-group mt-3">
+                    <label for="file">Select a CSV file</label>
+                    <input type="file" name="file" class="form-control-file" id="file" accept=".csv">
+                </div>
+                <button type="submit" class="btn btn-primary">Update MiniPC properties</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
