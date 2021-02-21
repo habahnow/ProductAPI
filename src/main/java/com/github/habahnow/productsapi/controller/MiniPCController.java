@@ -5,6 +5,7 @@ import com.github.habahnow.productsapi.model.MiniPC;
 import com.github.habahnow.productsapi.service.MiniPCService;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import net.bytebuddy.dynamic.scaffold.TypeWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -131,14 +132,21 @@ public class MiniPCController {
                             miniPC.getPartNumber());
                     if(exists){
                         if(!service.miniPCIsChanged(miniPC)){
-                            miniPCStatus.add("Will be Unchanged");
+                            miniPCStatus.add("Remains Unchanged");
                         }
                         else {
-                            miniPCStatus.add("Will be Updated");
+                            miniPCStatus.add("Has been Updated");
+                            service.createOrUpdateDevice(miniPC);
                         }
                     }
                     else{
-                        miniPCStatus.add("Will be Created");
+                        throw new RecordNotFoundException(
+                                "Record Not found. Only existing part " +
+                                        "numbers may be provided. Please " +
+                                        " add to the database, or remove it" +
+                                        " from the csv file. Problematic Part" +
+                                        "number: " ,
+                                miniPC.getPartNumber());
                     }
 
                 }
@@ -148,14 +156,19 @@ public class MiniPCController {
                 model.addAttribute("status", true);
                 model.addAttribute("miniPCStatus", miniPCStatus);
 
-            } catch (Exception ex) {
+            }  catch (RecordNotFoundException ex){
+                model.addAttribute("message", ex.getExceptionDetail() +
+                        "" + ex.getFieldValue());
+                model.addAttribute("status", false);
+            }
+
+              catch (Exception ex) {
                 model.addAttribute("message", "An error occurred " + //
                         "while processing the CSV file.\n\nError:\n" +ex) ;
                 model.addAttribute("status", false);
             }
         }
-
-        return "csv-reviewer-result";
+        return "csv-upload-update-properties-result";
     }
 
     @PostMapping("/save-csv-file")
