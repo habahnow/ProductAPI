@@ -3,9 +3,9 @@ package com.github.habahnow.productsapi.controller;
 import com.github.habahnow.productsapi.exception.RecordNotFoundException;
 import com.github.habahnow.productsapi.model.MiniPC;
 import com.github.habahnow.productsapi.service.MiniPCService;
+import com.github.habahnow.productsapi.utility.Utility;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
-import net.bytebuddy.dynamic.scaffold.TypeWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.xml.ws.Response;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -201,7 +200,7 @@ public class MiniPCController {
             model.addAttribute("status", false);
         }
         else {
-            // parse CSV file to create a list of `User` objects
+            // parse CSV file to create a list of MiniPC objects
             try (Reader reader = new BufferedReader(new //
                     InputStreamReader(file.getInputStream()))) {
 
@@ -211,23 +210,21 @@ public class MiniPCController {
                         .withIgnoreLeadingWhiteSpace(true)
                         .build();
 
-                // convert `CsvToBean` object to list of users
+                // convert `CsvToBean` object to list of miniPCs
                 List<MiniPC> miniPCs = csvToBean.parse();
 
                 List<String> miniPCStatus = new ArrayList<>();
-                for (MiniPC miniPC: miniPCs){
+                for (MiniPC miniPC : miniPCs) {
                     boolean exists = service.partNumberExists(//
                             miniPC.getPartNumber());
-                    if(exists){
-                        if(!service.miniPCIsChanged(miniPC)){
+                    if (exists) {
+                        if (!service.miniPCIsChanged(miniPC)) {
                             miniPCStatus.add("Unchanged");
-                        }
-                        else {
+                        } else {
                             miniPCStatus.add("Updated");
                             service.createOrUpdateDevice(miniPC);
                         }
-                    }
-                    else{
+                    } else {
                         miniPCStatus.add("Created");
                         service.createOrUpdateDevice(miniPC);
                     }
@@ -240,12 +237,19 @@ public class MiniPCController {
                 model.addAttribute("miniPCStatus", miniPCStatus);
 
             } catch (Exception ex) {
-                model.addAttribute("message", "An error occurred " + //
-                        "while processing the CSV file.\nError:\n" +ex) ;
-                model.addAttribute("status", false);
+                StringBuilder errors = new StringBuilder("An error occurred While processing the " +
+                        "CSV file: ");
+                if(Utility.isNestedConstraintViolation(ex)) {
+                    errors.append( Utility.getNestedConstraintViolationMessages(ex));
+                }
+                else{
+                    errors.append(ex.getMessage());
+                }
+
+                model.addAttribute("message", errors);
+                model.addAttribute("status" , false);
             }
         }
-
         return "file-upload-status";
     }
 
