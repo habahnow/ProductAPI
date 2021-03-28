@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class Utility {
-    public static boolean isNestedConstraintViolation(Exception exception){
+    public static boolean hasNestedConstraintViolation(Exception exception){
         Throwable throwInstance = exception.getCause();
 
         while ((throwInstance != null) &&
@@ -19,7 +19,7 @@ public class Utility {
         }
         return false;
     }
-    public static String getNestedConstraintViolationMessages(Exception exception){
+    public static Set<ConstraintViolation<?>> getNestedConstraintViolations(Exception exception){
         Throwable throwInstance = exception.getCause();
         StringBuilder builder = new StringBuilder();
 
@@ -29,23 +29,31 @@ public class Utility {
         }
 
         if (throwInstance instanceof ConstraintViolationException) {
-            Set<ConstraintViolation<?>> set =
-                    ((ConstraintViolationException) throwInstance).getConstraintViolations();
-            Iterator<ConstraintViolation<?>> iterator = set.iterator();
-            while(iterator.hasNext()){
-                ConstraintViolation<?> violation = iterator.next();
-                builder.append(violation.getMessage());
-                if(violation.getInvalidValue() == null){
-                    builder.append(" Problem Value: No value provided. ");
-                }
-                else {
-                    builder.append(" Problem value: " + violation.getInvalidValue() + ". ");
-                }
+            return ((ConstraintViolationException) throwInstance).getConstraintViolations();
+
+        }
+        return null;
+
+
+    }
+
+    public static String getViolationMessages(Set<ConstraintViolation<?>> set){
+        StringBuilder builder = new StringBuilder();
+
+        Iterator<ConstraintViolation<?>> iterator = set.iterator();
+        while(iterator.hasNext()){
+            ConstraintViolation<?> violation = iterator.next();
+            builder.append(violation.getMessage());
+            if(violation.getInvalidValue() == null){
+                builder.append(" Problem Value: No value provided. ");
+            }
+            else {
+                builder.append(" Problem value: " + violation.getInvalidValue() + ". ");
+                System.out.println("Invalid Value type: "+  violation.getInvalidValue().getClass());
             }
         }
 
         return builder.toString();
-
     }
 
 }

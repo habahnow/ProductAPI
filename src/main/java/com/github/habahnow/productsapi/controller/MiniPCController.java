@@ -239,8 +239,9 @@ public class MiniPCController {
             } catch (Exception ex) {
                 StringBuilder errors = new StringBuilder("An error occurred While processing the " +
                         "CSV file: ");
-                if(Utility.isNestedConstraintViolation(ex)) {
-                    errors.append( Utility.getNestedConstraintViolationMessages(ex));
+                if(Utility.hasNestedConstraintViolation(ex)) {
+                    errors.append(Utility.getViolationMessages(
+                            Utility.getNestedConstraintViolations(ex)));
                 }
                 else{
                     errors.append(ex.getMessage());
