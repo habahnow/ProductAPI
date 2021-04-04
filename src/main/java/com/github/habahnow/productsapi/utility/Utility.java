@@ -21,7 +21,6 @@ public class Utility {
     }
     public static Set<ConstraintViolation<?>> getNestedConstraintViolations(Exception exception){
         Throwable throwInstance = exception.getCause();
-        StringBuilder builder = new StringBuilder();
 
         while ((throwInstance != null)
                 && !(throwInstance instanceof ConstraintViolationException)) {

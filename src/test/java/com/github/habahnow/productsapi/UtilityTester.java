@@ -23,10 +23,6 @@ public class UtilityTester {
 //        assertTrue(Utility.isNestedConstraintViolation(exception));
 
         ConstraintViolationException constraintException = mock(ConstraintViolationException.class);
-        ConstraintViolation mockedViolation = mock(ConstraintViolation.class);
-
-        Set<ConstraintViolation<?>> violations = new HashSet<>();
-        violations.add(mockedViolation);
 
         Exception exception = new Exception("Outer Exception", new Exception("Middle Exception",
                 new Exception("Inner Exception", constraintException)));
@@ -40,10 +36,6 @@ public class UtilityTester {
    @Test
    public void hasNestedContraintViolationTrue2(){
        ConstraintViolationException constraintException = mock(ConstraintViolationException.class);
-       ConstraintViolation mockedViolation = mock(ConstraintViolation.class);
-
-       Set<ConstraintViolation<?>> violations = new HashSet<>();
-       violations.add(mockedViolation);
 
        Exception exception = new Exception("Outer Exception", new Exception("Middle Exception",
                new Exception("Inner Exception", new Exception( "2nd inner Exception",
@@ -55,12 +47,8 @@ public class UtilityTester {
    }
 
     @Test
-    public void hasNestedContraintViolationTrue3(){
+    public void hasNestedConstraintViolationTrue3(){
         ConstraintViolationException constraintException = mock(ConstraintViolationException.class);
-        ConstraintViolation mockedViolation = mock(ConstraintViolation.class);
-
-        Set<ConstraintViolation<?>> violations = new HashSet<>();
-        violations.add(mockedViolation);
 
         Exception exception = new Exception("exception" , constraintException);
 
@@ -81,7 +69,23 @@ public class UtilityTester {
 
         assertFalse(answer);
     }
+/*
+    @Test
+    public void getNestedContraintViolationsSingle(){
 
+        ConstraintViolationException mockedConstraintException = mock(ConstraintViolationException.class);
+        ConstraintViolation mockedViolation = mock(ConstraintViolation.class);
+
+        Set<ConstraintViolation<?>> violations = new HashSet<>();
+        violations.add(mockedViolation);
+
+        Exception exception = new Exception("exception" , mockedConstraintException);
+
+        boolean answer = Utility.hasNestedConstraintViolation(exception);
+
+        assertTrue(answer);
+        Utility.getNestedConstraintViolations(exception);
+    }
 /*
         //TODO: create test case for getViolationMEssages
         //TODO: use BDDMockito
