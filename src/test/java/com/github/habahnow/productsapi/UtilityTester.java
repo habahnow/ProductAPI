@@ -69,23 +69,31 @@ public class UtilityTester {
 
         assertFalse(answer);
     }
-/*
+
     @Test
-    public void getNestedContraintViolationsSingle(){
+    public void getNestedConstraintViolations(){
 
-        ConstraintViolationException mockedConstraintException = mock(ConstraintViolationException.class);
-        ConstraintViolation mockedViolation = mock(ConstraintViolation.class);
-
+        ConstraintViolationException mockedConstraintException =
+                mock(ConstraintViolationException.class);
         Set<ConstraintViolation<?>> violations = new HashSet<>();
-        violations.add(mockedViolation);
-
         Exception exception = new Exception("exception" , mockedConstraintException);
+        given(mockedConstraintException.getConstraintViolations()).willReturn(violations);
 
-        boolean answer = Utility.hasNestedConstraintViolation(exception);
+        Set<ConstraintViolation<?>> answer = Utility.getNestedConstraintViolations(exception);
 
-        assertTrue(answer);
-        Utility.getNestedConstraintViolations(exception);
+        assertEquals( violations, answer);
     }
+
+    @Test
+    public void getNestedConstraintViolationsNull(){
+
+        Exception exception = new Exception("exception");
+
+        Set<ConstraintViolation<?>> answer = Utility.getNestedConstraintViolations(exception);
+
+        assertEquals(null, answer);
+    }
+/*
 /*
         //TODO: create test case for getViolationMEssages
         //TODO: use BDDMockito
