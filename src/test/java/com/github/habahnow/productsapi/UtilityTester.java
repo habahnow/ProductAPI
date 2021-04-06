@@ -14,14 +14,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 public class UtilityTester {
-    //TODO: probably use mockito to mock a thrown constraint vioalation since i would otherwise
-    // create a clase that impleements the constraint violation.
+
     @Test
     public void hasNestedConstraintViolationTrue() {
-//        Exception exception = new Exception("Outer exception", new Exception("Inner Exception",
-//                new ConstraintViolationException("ConstraintViolation set")));
-//        assertTrue(Utility.isNestedConstraintViolation(exception));
-
         ConstraintViolationException constraintException = mock(ConstraintViolationException.class);
 
         Exception exception = new Exception("Outer Exception", new Exception("Middle Exception",
@@ -91,31 +86,67 @@ public class UtilityTester {
 
         Set<ConstraintViolation<?>> answer = Utility.getNestedConstraintViolations(exception);
 
-        assertEquals(null, answer);
+        assertNull(answer);
     }
-/*
-/*
-        //TODO: create test case for getViolationMEssages
-        //TODO: use BDDMockito
-        //TODO: mock contstraintViolationException, and mock constraintviolation. DONE
-        //TODO: given for ConstraintViolationException for getConstraintVIolations will return set
-        //      that contains contraintViolation.
-        //TODO: given for constraintViolation getMessage() and getInvalidValue() needs to be set.
-        given(mockedViolation.getMessage()).willReturn("Please include the import price");
-        given(mockedViolation.getInvalidValue()).willReturn(null);
-        given(exception.getConstraintViolations()).willReturn(violations);
 
-        Set<ConstraintViolation<?>> violations = new HashSet<>();
+    @Test
+    public void getViolationMessages1(){
+        ConstraintViolation mockedConstraintViolation =
+                mock(ConstraintViolation.class);
+        Set<ConstraintViolation<?>> set = new HashSet<>();
+        set.add(mockedConstraintViolation);
+        given(mockedConstraintViolation.getMessage()).willReturn("Error Message");
+        given(mockedConstraintViolation.getInvalidValue()).willReturn(20L);
 
-        given(mockedViolation.getPropertyPath()).willReturn("something");
-        violations.add(mockedViolation);
-        given(exception.getContraintViolations()).willReturn(violations);
+        String actual = Utility.getViolationMessages(set);
 
-        ResponseEntity<Object> response = controllerAdvice.handleContraintViolation(exception, webRequest);
+        assertEquals("Error Message Problem value: 20. " , actual);
+    }
 
-        assertThat(response.getStatusCode(), is(HttpStatus.BAD_REQUEST));
+    @Test
+    public void getViolationMessages3(){
 
- */
+        ConstraintViolation mockedConstraintViolation1 =
+                mock(ConstraintViolation.class);
+        ConstraintViolation mockedConstraintViolation2 =
+                mock(ConstraintViolation.class);
+        ConstraintViolation mockedConstraintViolation3 =
+                mock(ConstraintViolation.class);
+        Set<ConstraintViolation<?>> set = new HashSet<>();
+        set.add(mockedConstraintViolation1);
+        set.add(mockedConstraintViolation2);
+        set.add(mockedConstraintViolation3);
+        given(mockedConstraintViolation1.getMessage()).willReturn("Error Message1");
+        given(mockedConstraintViolation2.getMessage()).willReturn("Error Message2");
+        given(mockedConstraintViolation3.getMessage()).willReturn("Error Message3" );
+        given(mockedConstraintViolation1.getInvalidValue()).willReturn(10L);
+        given(mockedConstraintViolation2.getInvalidValue()).willReturn(20L);
+        given(mockedConstraintViolation3.getInvalidValue()).willReturn(30L);
 
+        String actual = Utility.getViolationMessages(set);
+
+        //Since the method getViolationMessages uses a set iterator (which has a random order),
+        // i remove each expected code section so that the resulting string is empty
+        actual = actual.replace("Error Message1 Problem value: 10. ", "");
+        actual = actual.replace("Error Message2 Problem value: 20. ", "");
+        actual = actual.replace("Error Message3 Problem value: 30. ", "");
+
+        assertEquals("", actual);
+    }
+
+    @Test
+    public void getViolationMessagesEmpty(){
+        ConstraintViolation mockedConstraintViolation =
+                mock(ConstraintViolation.class);
+        Set<ConstraintViolation<?>> set = new HashSet<>();
+        set.add(mockedConstraintViolation);
+        given(mockedConstraintViolation.getMessage()).willReturn("Null value was provided");
+        given(mockedConstraintViolation.getInvalidValue()).willReturn(null);
+
+        String actual = Utility.getViolationMessages(set);
+
+        assertEquals("Null value was provided Problem value: No value provided. "
+                , actual);
+    }
 
 }

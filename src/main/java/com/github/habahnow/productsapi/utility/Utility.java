@@ -44,11 +44,10 @@ public class Utility {
             ConstraintViolation<?> violation = iterator.next();
             builder.append(violation.getMessage());
             if(violation.getInvalidValue() == null){
-                builder.append(" Problem Value: No value provided. ");
+                builder.append(" Problem value: No value provided. ");
             }
             else {
                 builder.append(" Problem value: " + violation.getInvalidValue() + ". ");
-                System.out.println("Invalid Value type: "+  violation.getInvalidValue().getClass());
             }
         }
 
