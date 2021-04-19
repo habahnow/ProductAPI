@@ -15,14 +15,15 @@ import java.util.Objects;
 public abstract class Item {
 
 
-    @NotBlank
+    //TODO: add error messages
+    @NotBlank(message = "Please include the part number.")
     @Id
     @CsvBindByName
     @Column(name = "part_number" , nullable = false)
     private String partNumber;
 
-    @NotNull(message = "Please include the import price")
-    @PositiveOrZero(message = "Import price must be positive or zero")
+    @NotNull(message = "Please include the import price.")
+    @PositiveOrZero(message = "Import price must be positive or zero.")
     @CsvBindByName
     @Column(name = "import_price")
     private Long importPrice;

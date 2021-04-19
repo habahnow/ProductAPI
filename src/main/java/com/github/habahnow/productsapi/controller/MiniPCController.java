@@ -170,6 +170,7 @@ public class MiniPCController {
         return "csv-upload-update-properties-result";
     }
 
+    //TODO: probably remove since i don't expect end user to pass json object
     @PostMapping("/save-csv-file")
     public String saveCSVFile(
             @RequestParam("miniPCs")List<MiniPC> miniPCs  , Model model){

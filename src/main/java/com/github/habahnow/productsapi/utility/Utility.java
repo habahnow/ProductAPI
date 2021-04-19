@@ -43,7 +43,9 @@ public class Utility {
         while(iterator.hasNext()){
             ConstraintViolation<?> violation = iterator.next();
             builder.append(violation.getMessage());
-            if(violation.getInvalidValue() == null){
+            if(violation.getInvalidValue() == null ||
+                    violation.getInvalidValue() instanceof String &&
+                            ((String) violation.getInvalidValue()).isEmpty()){
                 builder.append(" Problem value: No value provided. ");
             }
             else {

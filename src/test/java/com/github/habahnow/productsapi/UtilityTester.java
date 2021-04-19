@@ -80,7 +80,7 @@ public class UtilityTester {
     }
 
     @Test
-    public void getNestedConstraintViolationsNull(){
+    public void getNestedConstraintViolationsNone(){
 
         Exception exception = new Exception("exception");
 
@@ -135,7 +135,7 @@ public class UtilityTester {
     }
 
     @Test
-    public void getViolationMessagesEmpty(){
+    public void getViolationMessagesNull(){
         ConstraintViolation mockedConstraintViolation =
                 mock(ConstraintViolation.class);
         Set<ConstraintViolation<?>> set = new HashSet<>();
@@ -146,6 +146,21 @@ public class UtilityTester {
         String actual = Utility.getViolationMessages(set);
 
         assertEquals("Null value was provided Problem value: No value provided. "
+                , actual);
+    }
+
+    @Test
+    public void getViolationMessagesEmpty(){
+        ConstraintViolation mockedConstraintViolation =
+                mock(ConstraintViolation.class);
+        Set<ConstraintViolation<?>> set = new HashSet<>();
+        set.add(mockedConstraintViolation);
+        given(mockedConstraintViolation.getMessage()).willReturn("No value was provided");
+        given(mockedConstraintViolation.getInvalidValue()).willReturn(new String(""));
+
+        String actual = Utility.getViolationMessages(set);
+
+        assertEquals("No value was provided Problem value: No value provided. "
                 , actual);
     }
 
