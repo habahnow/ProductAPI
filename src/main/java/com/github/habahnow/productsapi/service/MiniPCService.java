@@ -16,7 +16,7 @@ public class MiniPCService {
     @Autowired
     MiniPCRepository repository;
 
-    //TODO: change this method to separate create or upddate methods i think
+    //TODO: change this method to separate create or update methods i think
     public MiniPC createOrUpdateDevice(MiniPC entity)
             throws RecordNotFoundException {
         if(entity.getPartNumber()!=null){

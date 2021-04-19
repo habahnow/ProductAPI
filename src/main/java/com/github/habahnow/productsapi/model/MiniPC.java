@@ -11,7 +11,7 @@ import java.util.Objects;
 @Table(name = "mini_pc")
 public class MiniPC extends Item {
 
-    //TODO: read up on message for @NotNUll. i think i can add error messages
+    //TODO: add error messages
 
     @NotBlank
     @CsvBindByName
