@@ -204,11 +204,6 @@ public class MiniPCController {
         model.addAttribute("miniPCList", miniPCList);
         model.addAttribute("status", true);
 
-        System.out.println("running");
-        for(String miniPC: miniPCList){
-            System.out.println(miniPC);
-        }
-
         return "miniPCShowAll";
     }
 
