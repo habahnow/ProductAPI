@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title><!DOCTYPE html>
@@ -17,14 +17,9 @@
 <div class="container py-5">
     <div class="row">
         <div class="col-10 mx-auto">
-            <h1>Files to Upload</h1>
-            <!--display error if any-->
-            <div class="alert alert-danger" role="alert" th:if="${!status}">
-                <strong>Error:</strong>
-                <span th:text="${message}"></span>
-            </div>
+            <h1>Mini PCs and import price</h1>
 
-            <!--display users list-->
+            <!--display list of miniPCs-->
             <table class="table table-striped" th:if="${status}">
                 <thead>
                 <tr>
@@ -35,12 +30,10 @@
                 </thead>
                 <tbody>
                 <tr th:each="miniPC, i : ${miniPCList}">
-                    <tr th:each="first, second : ${#String.arraySplit(miniPC, ' '}">
-
-                        <th scope="row" th:text="${i.index + 1}"></th>
-                        <td th:text="${first}"></td>
-                        <td th:text="${second}"></td>
-                    </tr>
+                   <th scope="row" th:text="${i.index + 1}"></th>
+                    <div th:each="first : ${#strings.arraySplit(miniPC, '|')}">
+                            <td th:text="${first}"></td>
+                    </div>
                 </tr>
                 </tbody>
             </table>

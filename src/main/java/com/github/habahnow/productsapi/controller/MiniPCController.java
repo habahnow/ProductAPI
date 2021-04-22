@@ -198,11 +198,16 @@ public class MiniPCController {
         List<String> miniPCList = new ArrayList<>();
 
         for(MiniPC miniPC:list){
-           miniPCList.add(miniPC.getPartNumber() + " " + miniPC.getImportPrice());
+           miniPCList.add(miniPC.getPartNumber() + "|" + miniPC.getImportPrice());
         }
 
         model.addAttribute("miniPCList", miniPCList);
         model.addAttribute("status", true);
+
+        System.out.println("running");
+        for(String miniPC: miniPCList){
+            System.out.println(miniPC);
+        }
 
         return "miniPCShowAll";
     }
