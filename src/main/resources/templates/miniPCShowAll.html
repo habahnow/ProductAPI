@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="en" xmlns:th="http://www.thymeleaf.org">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Display All Mini PCs</title>
+
+    <!--Bootstrap 4-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-10 mx-auto">
+            <h1>Files to Upload</h1>
+            <!--display error if any-->
+            <div class="alert alert-danger" role="alert" th:if="${!status}">
+                <strong>Error:</strong>
+                <span th:text="${message}"></span>
+            </div>
+
+            <!--display users list-->
+            <table class="table table-striped" th:if="${status}">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Part Number</th>
+                    <th scope="col">Import Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="miniPC, i : ${miniPCList}">
+                    <tr th:each="first, second : ${#String.arraySplit(miniPC, ' '}">
+
+                        <th scope="row" th:text="${i.index + 1}"></th>
+                        <td th:text="${first}"></td>
+                        <td th:text="${second}"></td>
+                    </tr>
+                </tr>
+                </tbody>
+            </table>
+            <form method="get" action="/minipc/">
+                <button type="submit" class="btn btn-primary" >Go Back</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html></title>
+</head>
+<body>
+
+</body>
+</html>

@@ -191,6 +191,22 @@ public class MiniPCController {
 
     }
 
+    @GetMapping("/show-all")
+    public String showAllMiniPCs( Model model){
+        List<MiniPC> list = service.getAllMiniPCs();
+
+        List<String> miniPCList = new ArrayList<>();
+
+        for(MiniPC miniPC:list){
+           miniPCList.add(miniPC.getPartNumber() + " " + miniPC.getImportPrice());
+        }
+
+        model.addAttribute("miniPCList", miniPCList);
+        model.addAttribute("status", true);
+
+        return "miniPCShowAll";
+    }
+
     @PostMapping("/upload-csv-file")
     public String uploadCSVFileConfirmation(
             @RequestParam("file")MultipartFile file,Model model){
