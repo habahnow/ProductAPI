@@ -1,13 +1,13 @@
 package com.github.habahnow.productsapi.model;
 
 import com.opencsv.bean.CsvBindByName;
-import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Objects;
 
 @Entity
@@ -26,7 +26,7 @@ public abstract class Item {
     @PositiveOrZero(message = "Import price must be positive or zero.")
     @CsvBindByName
     @Column(name = "import_price")
-    private Long importPrice;
+    private BigDecimal importPrice;
 
     @CsvBindByName
     @Column(name = "quantity_price_breaks_id")
@@ -44,11 +44,12 @@ public abstract class Item {
         this.partNumber = partNumber;
     }
 
-    public Long getImportPrice() {
+    public BigDecimal getImportPrice() {
         return importPrice;
+//        return importPrice.round(new MathContext(3));
     }
 
-    public void setImportPrice(Long importPrice) {
+    public void setImportPrice(BigDecimal importPrice) {
         this.importPrice = importPrice;
     }
 
