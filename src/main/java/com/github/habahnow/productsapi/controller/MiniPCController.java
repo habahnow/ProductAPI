@@ -191,7 +191,7 @@ public class MiniPCController {
 
     }
 
-    @GetMapping("/show-all")
+    @GetMapping("/show-all-import")
     public String showAllMiniPCs( Model model){
         List<MiniPC> list = service.getAllMiniPCs();
 
@@ -204,7 +204,7 @@ public class MiniPCController {
         model.addAttribute("miniPCList", miniPCList);
         model.addAttribute("status", true);
 
-        return "miniPCShowAll";
+        return "miniPCShowAllImport";
     }
 
     @PostMapping("/upload-csv-file")
